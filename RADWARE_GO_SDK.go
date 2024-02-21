@@ -18,51 +18,57 @@ var client = &http.Client{
 	},
 }
 
-func Login(product string, host string, username string, password string) {
+func Login(product string, host string, username string, password string) (int, string, error) {
 	if "ALTEON" == strings.ToUpper(product) {
-		url := "https://"+host
+		url := "https://" + host
 		authHeader := basicAuthHeader(username, password)
 		login_request, err := http.NewRequest("POST", url, nil)
 		if err != nil {
-			fmt.Println("Error creating login request:", err)
-			return 
+			// fmt.Println("Error creating login request:", err)
+			return 0,"Error creating login request",err
 		}
 		login_request.Header.Set("Authorization", authHeader)
 		login_request.Header.Set("Content-Type", "application/json")
 		temp_request = login_request
-		return
+		return 0,"Login successful", nil
 	} else if "CYBERCONTROLLER" == strings.ToUpper(product) {
 		url := "https://" + host + "/mgmt/system/user/login"
-		Data := map[string]string{"username": "radware", "password": "radware"}
+		Data := map[string]string{"username": username, "password": password}
 		Bytes, err := json.Marshal(Data)
 		if err != nil {
-			fmt.Println("Error encoding JSON:", err)
-			return 
+			// fmt.Println("Error encoding JSON:", err)
+			return 0,"Error encoding JSON",err
 		}
 		login_request, err := http.NewRequest("POST", url, bytes.NewBuffer(Bytes))
 		if err != nil {
-			fmt.Println("Error creating login request:", err)
-			return 
+			// fmt.Println("Error creating login request:", err)
+			return 0,"Error creating login request",err
 		}
 		login_request.Header.Set("Content-Type", "application/json")
 		login_response, err := client.Do(login_request)
 
 		if err != nil {
-			fmt.Println("Error making login request:", err)
-			return 
+			// fmt.Println("Error making login request:", err)
+			return 0,"Error making login request",err
 		}
 		defer login_response.Body.Close()
 		JsessionID, err := extractJSessionID(login_response)
 		if err != nil {
 			fmt.Println("Error extracting JSESSIONID:", err)
-			return 
+			return 0,"Error extracting JSESSIONID",err
+		}
+		login_response_body, err := ioutil.ReadAll(login_response.Body)
+		if err != nil {
+			fmt.Println("Error reading API response body:", err)
+			return login_response.StatusCode,string(login_response_body),err
 		}
 		temp_request = login_request
 		temp_request.Header.Set("Content-Type", "application/json")
 		temp_request.Header.Set("Cookie", fmt.Sprintf("JSESSIONID=%s", JsessionID))
-		fmt.Println("Login Successful")
-		return 
+		// fmt.Println("Login Successful")
+		return 0,string(login_response_body),nil
 	}
+	return 0,"",nil
 
 }
 
@@ -89,7 +95,7 @@ func Request(host string, method string, API string, Data map[string]interface{}
 	if err != nil {
 		return APIResponse.StatusCode, "Error reading API response body", err
 	}
-	
+
 	return APIResponse.StatusCode, string(APIResponseBody), nil
 }
 
