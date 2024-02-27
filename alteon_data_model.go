@@ -1,3 +1,5 @@
+package RadwareGoSDK
+
 type RealServer struct {
 	Items []RealServerItem `json:"SlbNewCfgEnhRealServerTable,omitempty"`
 }
