@@ -67,7 +67,7 @@ func Login(product string, host_ip string, username string, password string) (*N
 		JsessionID, err := extractJSessionID(login_response)
 		if err != nil {
 			// fmt.Println("Error extracting JSESSIONID:", err)
-			return &new_client, login_response.StatusCode, "Error extracting JSESSIONID", err
+			return &new_client, 0, "Error extracting JSESSIONID", err
 		}
 		
 		
