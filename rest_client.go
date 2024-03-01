@@ -56,16 +56,21 @@ func Login(product string, host_ip string, username string, password string) (*N
 			return &new_client, 0, "Error making login request", err
 		}
 		defer login_response.Body.Close()
-		JsessionID, err := extractJSessionID(login_response)
-		if err != nil {
-			// fmt.Println("Error extracting JSESSIONID:", err)
-			return &new_client, 0, "Error extracting JSESSIONID", err
-		}
 		login_response_body, err := ioutil.ReadAll(login_response.Body)
 		if err != nil {
 			// fmt.Println("Error reading API response body:", err)
 			return &new_client, login_response.StatusCode, string(login_response_body), err
 		}
+		if login_response.StatusCode == 401 {
+			return nil, login_response.StatusCode, string(login_response_body), err
+		}
+		JsessionID, err := extractJSessionID(login_response)
+		if err != nil {
+			// fmt.Println("Error extracting JSESSIONID:", err)
+			return &new_client, 0, "Error extracting JSESSIONID", err
+		}
+		
+		
 		new_client.HTTPRequest = login_request
 		new_client.HTTPRequest.Header.Set("Content-Type", "application/json")
 		new_client.HTTPRequest.Header.Set("Cookie", fmt.Sprintf("JSESSIONID=%s", JsessionID))
