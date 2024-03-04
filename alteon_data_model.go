@@ -27,3 +27,12 @@ type RealServerItem struct {
 	Name         string `json:"Name"`
 	State        int    `json:"State"`
 }
+
+// ServerGroupItem -
+type ServerGroupItem struct {
+	Index          string `json:"Index"`
+	AddServer      string `json:"AddServer"`
+	RemoveServer   string `json:"RemoveServer"`
+	HealthCheckUrl string `json:"HealthCheckUrl"`
+	Name           string `json:"Name"`
+}
