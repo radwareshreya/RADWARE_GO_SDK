@@ -36,3 +36,14 @@ type ServerGroupItem struct {
 	HealthCheckUrl string `json:"HealthCheckUrl"`
 	Name           string `json:"Name"`
 }
+
+type VirtualServer struct {
+	Items []VirtualServerItem `json:"SlbNewCfgEnhVirtServerTable,omitempty"`
+}
+ 
+// VirtualServerItem -
+type VirtualServerItem struct {
+	Index        string `json:"Index"`
+	VirtServerIpAddress       string `json:"VirtServerIpAddress"`
+	VirtServerState        int    `json:"VirtServerState"`
+}
