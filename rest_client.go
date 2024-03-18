@@ -112,7 +112,7 @@ func (new_client *New_Client) Request(method string, API string, Data map[string
 	return APIResponse.StatusCode, string(APIResponseBody), nil
 }
 
-func (new_client *New_Client) RequestString(method string, API string, Data string, additional_header map[string]string) (int, string, error) {
+func (new_client *New_Client) RequestString(method string, API string, Data []byte, additional_header map[string]string) (int, string, error) {
 	URL := "https://" + new_client.HostIP + API
 	New_Request, err := http.NewRequest(strings.ToUpper(method), URL, bytes.NewBuffer(Data))
 	if err != nil {
