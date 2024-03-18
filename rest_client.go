@@ -112,6 +112,33 @@ func (new_client *New_Client) Request(method string, API string, Data map[string
 	return APIResponse.StatusCode, string(APIResponseBody), nil
 }
 
+func (new_client *New_Client) RequestString(method string, API string, Data string, additional_header map[string]string) (int, string, error) {
+	URL := "https://" + new_client.HostIP + API
+	New_Request, err := http.NewRequest(strings.ToUpper(method), URL, bytes.NewBuffer(Data))
+	if err != nil {
+		return 0, "Error creating API request", err
+	}
+
+	New_Request.Header = new_client.HTTPRequest.Header.Clone()
+	fmt.Println(New_Request.Header)
+	for key, value := range additional_header {
+		New_Request.Header.Set(key, value)
+	}
+	APIResponse, err := Client.Do(New_Request)
+	if err != nil {
+		return 0, "Error making API request", err
+	}
+	defer APIResponse.Body.Close()
+
+	// Read the response body of the API call
+	APIResponseBody, err := ioutil.ReadAll(APIResponse.Body)
+	if err != nil {
+		return APIResponse.StatusCode, "Error reading API response body", err
+	}
+
+	return APIResponse.StatusCode, string(APIResponseBody), nil
+}
+
 func (new_client *New_Client) Logout(product string) (int, string, error) {
 	url := ""
 	if "ALTEON" == strings.ToUpper(product) {
