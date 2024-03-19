@@ -35,6 +35,7 @@ type ServerGroupItem struct {
 	RemoveServer   string `json:"RemoveServer"`
 	HealthCheckUrl string `json:"HealthCheckUrl"`
 	Name           string `json:"Name"`
+	HealthCheckLayer int `json:"HealthCheckLayer"`
 }
 
 type VirtualServer struct {
