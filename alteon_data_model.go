@@ -47,3 +47,15 @@ type VirtualServerItem struct {
 	VirtServerIpAddress       string `json:"VirtServerIpAddress"`
 	VirtServerState        int    `json:"VirtServerState"`
 }
+
+type VirtualService struct {
+	Items []VirtualServiceItem `json:"SlbNewCfgEnhVirtServicesTable,omitempty"`
+}
+ 
+// VirtualServiceItem -
+type VirtualServiceItem struct {
+	ServIndex        string `json:"ServIndex"`
+	Index        int `json:"Index"`
+	VirtPort       int `json:"VirtPort"`
+	RealPort        int    `json:"RealPort"`
+}
