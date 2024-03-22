@@ -15,3 +15,7 @@ func (new_client *New_Client) UpdateItem(API string, Data map[string]interface{}
 func (new_client *New_Client) DeleteItem(API string, Data map[string]interface{}, additional_header map[string]string) (int, string, error) {
 	return(new_client.Request("DELETE", API, Data, additional_header))
 }
+
+func (new_client *New_Client) CreateItemString(API string, Data []byte, additional_header map[string]string) (int, string, error) {
+	return(new_client.Request("POST", API, Data, additional_header))
+}
