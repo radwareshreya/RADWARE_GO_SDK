@@ -163,3 +163,13 @@ type VirtualServiceItem struct {
 	RtSrcTnl      int    `json:"RtSrcTnl"`
 	Sideband      string `json:"Sideband"`
 }
+
+// SslPolicyItem -
+type SslPolicyItem struct {
+	Name           string `json:"Name"`
+	AdminStatus    int    `json:"AdminStatus"`
+	Fessl          int    `json:"Fessl"`
+	Bessl          int    `json:"Bessl"`
+	FESslv3Version int    `json:"FESslv3Version"`
+}
+
