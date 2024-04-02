@@ -166,6 +166,7 @@ type VirtualServiceItem struct {
 
 // SslPolicyItem -
 type SslPolicyItem struct {
+	NameIdIndex    string `json:"NameIdIndex"`
 	Name           string `json:"Name"`
 	AdminStatus    int    `json:"AdminStatus"`
 	Fessl          int    `json:"Fessl"`
