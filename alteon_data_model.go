@@ -26,7 +26,7 @@ type RealServerItem struct {
 	SuccRetry       int    `json:"SuccRetry"`
 	Name            string `json:"Name"`
 	State           int    `json:"State"`
-	DeleteStatus    string `json:"DeleteStatus"`
+	DeleteStatus    int `json:"DeleteStatus"`
 	NxtRportIdx     int    `json:"NxtRportIdx"`
 	NxtBuddyIdx     int    `json:"NxtBuddyIdx"`
 	LLBType         int    `json:"LLBType"`
