@@ -174,3 +174,21 @@ type SslPolicyItem struct {
 	FESslv3Version int    `json:"FESslv3Version"`
 }
 
+// Http2PolicyItem -
+type Http2PolicyItem struct {
+	NameIdIndex       string `json:"NameIdIndex"`
+	Name              string `json:"Name"`
+	AdminStatus       int    `json:"AdminStatus"`
+	Streams           int    `json:"Streams"`
+	Idle              int    `json:"Idle"`
+	EnaInsert         int    `json:"EnaInsert"`
+	Header            string `json:"Header"`
+	EnaServerPush     int    `json:"EnaServerPush"`
+	HpackSize         string `json:"HpackSize"`
+	DeleteStatus      int    `json:"DeleteStatus"`
+	BackendStatus     int    `json:"BackendStatus"`
+	BackendStreams    int    `json:"BackendStreams"`
+	BackendHpackSize  string `json:"BackendHpackSize"`
+	BackendServerPush int    `json:"BackendServerPush"`
+}
+
