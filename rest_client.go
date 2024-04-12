@@ -81,13 +81,9 @@ func Login(product string, host_ip string, username string, password string) (*N
 	return &new_client, 0, "Provide proper product name, Ex. ALTEON or CYBERCONTROLLER", nil
 }
 
-func (new_client *New_Client) Request(method string, API string, Data map[string]interface{}, additional_header map[string]string) (int, string, error) {
+func (new_client *New_Client) Request(method string, API string, Data []byte, additional_header map[string]string) (int, string, error) {
 	URL := "https://" + new_client.HostIP + API
-	APIBytes, err := json.Marshal(Data)
-	if err != nil {
-		return 0, "Error encoding JSON", err
-	}
-	New_Request, err := http.NewRequest(strings.ToUpper(method), URL, bytes.NewBuffer(APIBytes))
+	New_Request, err := http.NewRequest(strings.ToUpper(method), URL, bytes.NewBuffer(Data))
 	if err != nil {
 		return 0, "Error creating API request", err
 	}
